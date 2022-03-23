@@ -185,7 +185,7 @@ To check the status of the service, use the command below.
 ```bash
 kubectl get service
 NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-kubern8sservice   NodePort   10.108.57.90   <Pending>        80:32227/TCP   18m
+kubern8sservice   LoadBalancer   10.108.57.90   <Pending>        80:32227/TCP   18m
 ```
 
 Something similar should appear. The service has created and can be reachable within the kubernetes space by using the 'kubern8sservice' and will soon be available via the EXTERNAL-IP which will populate within 1-2 minutes!
