@@ -229,6 +229,8 @@ kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v5
 
 It seems that version 5 was a bit too much for our users. Lets roll back a few versions and see what kubernetes does under the hood. If you want to watch live changes to the pods include -w as shown below. Keep an eye on the terminal while executing the version change.
 
+Before you do this, click the **+ symbol**  (on the left hand side) on the Google Cloud Shell to open a new tab, then enter the below:
+
 ```bash
 kubectl get pods -w
 ```
