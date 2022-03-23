@@ -169,6 +169,27 @@ The desired amount is now 2.
 
 &nbsp;
 
+### Create a Service
+
+Create a service
+We have our application ready, let's make a start to expose it to the outside world. In order to do that we need to create a service. This service will be used to link to the deployment with the use of the selectors and labels. Create the service:
+
+Let's apply the service:
+
+```bash
+kubectl create -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_service.yaml
+```
+
+To check the status of the service, use the command below.
+
+```bash
+kubectl get service
+NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubern8sservice   NodePort   10.108.57.90   <Pending>        80:32227/TCP   18m
+```
+
+Something similar should appear. The service has created and can be reachable within the kubernetes space by using the 'kubern8sservice' and will soon be available via the EXTERNAL-IP which will populate within 1-2 minutes!
+
 ### Update Pods
 
 Our developers have worked hard to create a new version of our application. Let's update the deployment! Remember the deployment?
@@ -265,11 +286,11 @@ Use your favorite editor but the real masters may also use vim ofcourse!
 
 Requirements: &nbsp;
 
-Create a deployment with 2 pods. &nbsp;
+Create a deployment with **2 pods**. &nbsp;
 
-Create a services with type LoadBalancer &nbsp;
+Create a services with type **LoadBalancer** &nbsp;
 
-Note: Use port **8080** in your deployment and service yaml's.
+Note: Use port **8080** in your deployment and service yaml(s).
 
 &nbsp;
 
