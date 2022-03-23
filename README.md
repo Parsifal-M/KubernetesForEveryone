@@ -155,7 +155,7 @@ kubectl scale deployments kubern8sdemo --replicas=2
 Now let's check the amount of pods again.
 
 ```bash
-kubectl get pods -n <your-namespace>
+kubectl get pods
 ```
 ```bash
 NAME                           READY     STATUS    RESTARTS   AGE
@@ -188,7 +188,7 @@ kubectl create -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEver
 To check the status of the service, use the command below.
 
 ```bash
-kubectl get service -n <your-namespace>
+kubectl get service
 NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 kubern8sservice   LoadBalancer   10.108.57.90   <Pending>        80:32227/TCP   18m
 ```
