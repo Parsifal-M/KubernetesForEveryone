@@ -25,7 +25,7 @@ In this workshop we make use of the Google Cloud Shell. This shell provides all 
 
 On the cheat sheet you can find the useful commands that you can use during the workshop.
 
-### Create a namespace
+## Create a namespace
 Now that we are into the cluster we need to create a namespace, but first let's see what namespaces are available.
 
 ```bash
@@ -59,7 +59,7 @@ kubectl config view | select-string namespace:
 ```
  
 &nbsp;
-### Create a deployment
+## Create a deployment
 Now that we are in the right namespace we will deploy our replicaset. A replicaset is part of the manifest that tells kubernetes how many copies of your pods are desired.
 
 ```bash
@@ -108,7 +108,7 @@ NAME           DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 kubern8sdemo   3         3         3            3           43s
 ```
 &nbsp;
-### Pods
+## Pods
 Let's now take a closer look at the pods. 
 ```bash
 kubectl get pods
@@ -169,7 +169,7 @@ The desired amount is now 2.
 
 &nbsp;
 
-### Create a Service
+## Create a Service
 
 Create a service
 We have our application ready, let's make a start to expose it to the outside world. In order to do that we need to create a service. This service will be used to link to the deployment with the use of the selectors and labels. Create the service:
@@ -190,7 +190,7 @@ kubern8sservice   LoadBalancer   10.108.57.90   <Pending>        80:32227/TCP   
 
 Something similar should appear. The service has created and can be reachable within the kubernetes space by using the 'kubern8sservice' and will soon be available via the EXTERNAL-IP which will populate within 1-2 minutes!
 
-### Update Pods
+## Update Pods
 
 Our developers have worked hard to create a new version of our application. Let's update the deployment! Remember the deployment?
 
@@ -272,22 +272,25 @@ Below you can see how your application should now look in the browser:
 
 &nbsp;
 
-### Clean up!
+## Clean up!
 Clean up your deployment and your service before you go to the next task.
 
 &nbsp;
 
-### Do It Yourself
+## Do It Yourself
 
 ![Super Mario](https://github.com/Wesbest/KubernetesForEveryone/blob/master/Pictures/SuperMario.png)
 
 Try to get Super Mario running in your browser.
 
-*tips
+**Tips**
 
 Image source: https://hub.docker.com/r/pengbai/docker-supermario/ 
-Don't reinvent the wheel. Use our templates. https://github.com/smii/KubernetesForEveryone/tree/master/Templates
+
+Don't reinvent the wheel! Use our templates: https://github.com/smii/KubernetesForEveryone/tree/master/Templates
+
 Use your favorite editor but the real masters may also use vim ofcourse!
+
 &nbsp;
 
 
@@ -297,7 +300,7 @@ Create a deployment with **2 pods**. &nbsp;
 
 Create a services with type **LoadBalancer** &nbsp;
 
-Note: Use port **8080** in your deployment and service yaml(s).
+Note: Use port **8080** in your **deployment** and **service** yaml(s).
 
 &nbsp;
 
