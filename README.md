@@ -234,11 +234,15 @@ Before you do this, click the **+ symbol**  (on the left hand side) on the Googl
 ```bash
 kubectl get pods -w
 ```
+
+Keep **both** tabs open, swap back to your **first** (original) tab and enter the below, then swap back to the **new tab**.
+
 ```bash
 kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v3
 ```
 
 While watching the live changes, you should see something similar to this:
+
 ```bash
 NAME                           READY     STATUS              RESTARTS   AGE
 kubern8sdemo-7b4db456b-j59sd   1/1       Running             0          2m
@@ -258,6 +262,7 @@ kubern8sdemo-7b4db456b-npk75   0/1       Terminating         0          2m
 kubern8sdemo-7b4db456b-npk75   0/1       Terminating         0          2m
 kubern8sdemo-7b4db456b-npk75   0/1       Terminating         0          2m
 ```
+
 Kubernetes is creating a new container before terminating the old one until our desired amount is reached. Use control/cmd c to stop it the pod watch.
 &nbsp;
 
