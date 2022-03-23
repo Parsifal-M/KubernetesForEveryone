@@ -46,6 +46,11 @@ Now lets create your own namespace. Use the command below and change the name in
 ```bash
 kubectl create namespace <insert-name>
 ```
+**Note** Keep a note of your namespace as we will use it throughout the exercise, if you forget what you set, you can always use: 
+
+```bash
+kubectl get namespaces
+```
 
 Most commands are easy to use in Kubernetes, switching between namespaces is a different story. Copy and execute the command below to switch to your own namespace. Don't forget to switch the namespace name to fit the one you used earlier.
 The actions which follow will now only execute within this namespace. Deployments in other namespaces will not be visible. Now lets validate the namespace change with the second command.
@@ -63,7 +68,7 @@ kubectl config view | select-string namespace:
 Now that we are in the right namespace we will deploy our replicaset. A replicaset is part of the manifest that tells kubernetes how many copies of your pods are desired.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_deployment.yaml -n <your-namespace>
 ````
 We have just deployed the following deployment script to our namespace. It's a deployment with 3 pods. 
 ```bash
@@ -93,12 +98,12 @@ spec:
 To make sure the deployment went correctly we are going to check the status:
 
 ```bash
-kubectl get deployments
+kubectl get deployments -n <your-namespace>
 ```
 If you want to delete the deployment you can use the following command: 
 
 ```bash
-kubectl delete deployment <deployment_name>
+kubectl delete deployment <deployment_name> -n <your-namespace>
 ```
 
 If you didn't delete the deployment, the status should look similar to below. It shows the amounts of pods created during this deployment. As you can see you have a desired amount of 3 pods and the current amount of pods is also 3. 
@@ -108,10 +113,11 @@ NAME           DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 kubern8sdemo   3         3         3            3           43s
 ```
 &nbsp;
+
 ## Pods
 Let's now take a closer look at the pods. 
 ```bash
-kubectl get pods
+kubectl get pods -n <your-namespace>
 ```
 
 ```bash
@@ -129,7 +135,7 @@ kubectl delete pod kubern8sdemo-68fcf74b6-55vjr
 Okay we have now deleted the pod. Let's take a look at the status of the pods.
 
 ```bash
-kubectl get pods
+kubectl get pods -n <your-namespace>
 ```
 
 ```bash
@@ -145,12 +151,12 @@ In this example you can see there are still 3 pods running, how is that possible
 So how do we reduce the amounts of pods? We will have to scale the replicaset. We are going to scale down the deployment to 2 pods. This will be a permanent change to the deployment, unless we later adjust the desired amount of pods again.
 
 ```bash
-kubectl scale deployments kubern8sdemo --replicas=2  
+kubectl scale deployments kubern8sdemo --replicas=2 -n <your-namespace>
 ```
 Now let's check the amount of pods again.
 
 ```bash
-kubectl get pods
+kubectl get pods -n <your-namespace>
 ```
 ```bash
 NAME                           READY     STATUS    RESTARTS   AGE
@@ -159,7 +165,7 @@ kubern8sdemo-68fcf74b6-qddsp   1/1       Running   0          7m
 ```
 As you can see the amount of pods has been reduced. Let's check the deployment to see the desired amount of pods.
 ```bash
-kubectl get deployments
+kubectl get deployments -n <your-namespace>
 ```
 ```bash
 NAME           DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -177,13 +183,13 @@ We have our application ready, let's make a start to expose it to the outside wo
 Let's apply the service:
 
 ```bash
-kubectl create -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_service.yaml
+kubectl create -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_service.yaml -n <your-namespace>
 ```
 
 To check the status of the service, use the command below.
 
 ```bash
-kubectl get service
+kubectl get service -n <your-namespace>
 NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 kubern8sservice   LoadBalancer   10.108.57.90   <Pending>        80:32227/TCP   18m
 ```
@@ -221,7 +227,7 @@ spec:
 As you can see our old deployment uses a docker image with tag v1. The developers recently finished version 5. With a single command we can update the version of our deployed pods to that version. If you want to see how quick the application is updated, make sure to keep an eye on your browser. Before proceeding to the next step, wait till the application has been updated in your browser.
 
 ```bash
-kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v5
+kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v5 -n <your-namespace>
 ```
 ![Application](https://github.com/Wesbest/KubernetesForEveryone/blob/master/Pictures/App_5_stars.png)
 
@@ -232,13 +238,13 @@ It seems that version 5 was a bit too much for our users. Lets roll back a few v
 Before you do this, click the **+ symbol**  (on the left hand side) on the Google Cloud Shell to open a new tab, then enter the below:
 
 ```bash
-kubectl get pods -w
+kubectl get pods -w -n <your-namespace>
 ```
 
 Keep **both** tabs open, swap back to your **first** (original) tab and enter the below, then swap back to the **new tab**.
 
 ```bash
-kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v3
+kubectl set image deployment/kubern8sdemo kubern8sdemo=mvdmeij/k8sdemo:v3 -n <your-namespace>
 ```
 
 While watching the live changes, you should see something similar to this:
@@ -285,6 +291,8 @@ Try to get Super Mario running in your browser.
 
 **Tips**
 
+Make sure you deploy it to **your** namespace! (using -n <namespace>)
+
 Image source: https://hub.docker.com/r/pengbai/docker-supermario/ 
 
 Don't reinvent the wheel! Use our templates: https://github.com/smii/KubernetesForEveryone/tree/master/Templates
@@ -304,5 +312,5 @@ Note: Use port **8080** in your **deployment** and **service** yaml(s).
 
 &nbsp;
 
-### The End
+## The End
 Well that's about it. Raise your hand if you have questions!
