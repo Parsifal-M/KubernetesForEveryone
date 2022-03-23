@@ -1,18 +1,30 @@
  Kubernetes For Everyone
 -----------------------
 
-If you haven't installed Minikube then check out the following  [link](https://github.com/smii/KubernetesForEveryone/blob/master/minikube.md)
+## Log Into Google Cloud
+
+Visit [Google Cloud Shell](https://console.cloud.google.com/home/dashboard?cloudshell=true) and login with the details provided to you.
+
+In the cloud shell that appears on the bottom of your screen enter the following:
+
+```bash
+gcloud container clusters get-credentials my-first-cluster-1 --zone europe-central2-a --project kubernetes-345009
+```
 
 In this workshop you will create your own deployment. It contains several pods that will run an application. The application will look like this:
+
 &nbsp;
-
-
 
 ![Application](https://github.com/Wesbest/KubernetesForEveryone/blob/master/Pictures/App_1_star.png)
 
 &nbsp;
 
 &nbsp;
+
+In this workshop we make use of the Google Cloud Shell. This shell provides all the tools that are necessary to manage Kubernetes. In the shell we will use the utility kubectl. 
+
+On the cheat sheet you can find the useful commands that you can use during the workshop.
+
 ### Create a namespace
 Now that we are into the cluster we need to create a namespace, but first let's see what namespaces are available.
 
@@ -32,7 +44,7 @@ You probably see something similar to above. Those are the default namespaces th
 Now lets create your own namespace. Use the command below and change the name in the example to your own name or favorite alias.
 
 ```bash
-kubectl create namespace insert-name
+kubectl create namespace <insert-name>
 ```
 
 Most commands are easy to use in Kubernetes, switching between namespaces is a different story. Copy and execute the command below to switch to your own namespace. Don't forget to switch the namespace name to fit the one you used earlier.
@@ -51,7 +63,7 @@ kubectl config view | select-string namespace:
 Now that we are in the right namespace we will deploy our replicaset. A replicaset is part of the manifest that tells kubernetes how many copies of your pods are desired.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/Wesbest/KubernetesForEveryone/master/Training/k8s_deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/Parsifal-M/KubernetesForEveryone/master/Training/k8s_deployment.yaml
 ````
 We have just deployed the following deployment script to our namespace. It's a deployment with 3 pods. 
 ```bash
@@ -157,51 +169,6 @@ The desired amount is now 2.
 
 &nbsp;
 
-### Create a service
-We have our application ready, let's make a start to expose it to the outside world. In order to do that we need to create a service. This service will be used to link to the deployment with the use of the selectors and labels. Create the service:
-
-Let's apply the service:
-
-```bash
-kubectl create -f https://raw.githubusercontent.com/smii/KubernetesForEveryone/master/Training/k8s_service.yaml
-
-```
-
-To check the status of the service, use the command below.
-
-```bash
-kubectl get service
-```
-
-```bash
-NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
-kubern8sservice   NodePort   10.108.57.90   <none>        80:32227/TCP   18m
-```
-Something similar should appear. The service has created and can be reachable within the kubernetes space by using the 'kubern8sservice' as name but it's not reachable from the outside world! 
-
-### Create an Ingress
-Let's add a hostname to the service by using an ingress controller (nginx) to make it reachable from the outside world!
-```bash
-kubectl create -fhttps://raw.githubusercontent.com/smii/KubernetesForEveryone/dev/Training/k8s_ingress.yaml
-```
-
-Now let's check which hostname it created for our service!
-
-```bash
-kubectl get ingress
-```
-```bash
-NAME              CLASS    HOSTS              ADDRESS         PORTS   AGE
-example-ingress   <none>   hello-world.test   172.31.232.29   80      8m54s
-```
-
-We have now connected the ingress to our 'kubern8sservice' service which is connected to the pods with the help of labels and selectors. We can now access our application from the browser as it is exposed through the service ingress. Open a new tab and copy the hostname that returned in a browser. A webapplication should appear. Enable the autorefresh button. We will need that later. 
-&nbsp;
-
-![Application](https://github.com/Wesbest/KubernetesForEveryone/blob/master/Pictures/App_1_star.png)
-
-&nbsp;
-
 ### Update Pods
 
 Our developers have worked hard to create a new version of our application. Let's update the deployment! Remember the deployment?
@@ -300,11 +267,11 @@ Requirements: &nbsp;
 
 Create a deployment with 2 pods. &nbsp;
 
-Create a services with type NodePort and re-use your public ip adress. &nbsp;
+Create a services with type LoadBalancer &nbsp;
 
-Create an ingress that points to the label previous created service
-
+Note: Use port **8080** in your deployment and service yaml's.
 
 &nbsp;
+
 ### The End
 Well that's about it. Raise your hand if you have questions!
