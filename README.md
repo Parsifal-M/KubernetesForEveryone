@@ -8,7 +8,7 @@ Visit [Google Cloud Shell](https://console.cloud.google.com/home/dashboard?cloud
 In the cloud shell that appears on the bottom of your screen enter the following:
 
 ```bash
-gcloud container clusters get-credentials my-first-cluster-1 --zone europe-central2-a --project kubernetes-345009
+gcloud container clusters get-credentials my-first-cluster-1 --zone europe-central2-b --project kubernetes-345009
 ```
 
 In this workshop you will create your own deployment. It contains several pods that will run an application. The application will look like this:
